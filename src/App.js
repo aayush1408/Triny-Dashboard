@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import List from './Components/List';
 import './App.css';
 
 class App extends Component {
@@ -12,7 +13,6 @@ class App extends Component {
   componentDidMount() {
     axios('http://localhost:5000/get-data').then(({ data }) => {
       this.setState({ parameters: [...data] })
-      console.log(this.state.parameters);
     });
   }
   render() {
@@ -21,6 +21,7 @@ class App extends Component {
         <header>
           <h1>Dashboard</h1>
         </header>
+        <List parameters={this.state.parameters} />
       </div>
     );
   }
