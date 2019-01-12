@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 
-const ListItem = (props) => {
+const ListItem = ({ para }) => {
   return (
     <Fragment>
-      <li>{props.para.name}</li>
-      <li>{props.para.mobile}</li>
+      <li>{para.name}</li>
+      <li>{para.mobile}</li>
     </Fragment>
   )
 }

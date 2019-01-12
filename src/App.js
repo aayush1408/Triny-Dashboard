@@ -1,27 +1,38 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import List from './Components/List';
+import RegisterForm from './Components/RegisterForm';
 import './App.css';
-
+import Dashboard from './Components/Dashboard';
+import LoginForm from './Components/LoginForm';
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      parameters: []
+      user: ''
     }
   }
   componentDidMount() {
-    axios('http://localhost:5000/get-data').then(({ data }) => {
-      this.setState({ parameters: [...data] })
-    });
+    axios.get('http://localhost:5000/user/current-user', { withCredentials: true }).then(({ data }) => {
+      console.log(data);
+    }).catch(() => {
+      console.log('Error occured');
+    })
   }
+
   render() {
+    const { user } = this.state;
     return (
       <div className="App">
         <header>
-          <h1>Dashboard</h1>
+          <h1>Triny.io</h1>
         </header>
-        <List parameters={this.state.parameters} />
+        {
+          user ||
+          <div>
+            <LoginForm />
+          </div>
+        }
+
       </div>
     );
   }
