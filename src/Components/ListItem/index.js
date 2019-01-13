@@ -1,10 +1,15 @@
 import React, { Fragment } from 'react';
-
+import { Card } from 'antd';
 const ListItem = ({ para }) => {
   return (
     <Fragment>
-      <li>{para.name}</li>
-      <li>{para.mobile}</li>
+     <Card
+      title={para.name}
+    >
+      <p>{para.name}</p>
+      <p>{para.mobile}</p>
+      <p>xyz123@gmail.com</p>
+    </Card>
     </Fragment>
   )
 }

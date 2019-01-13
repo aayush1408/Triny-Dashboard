@@ -1,16 +1,16 @@
 import React from 'react';
 import ListItem from '../ListItem';
-
+import './index.css'
 const List = ({ parameters }) => {
   const listItems = parameters.map((para) => {
     return <ListItem key={para.name} para={para} />
   });
   return (
-    <ul>
+    <div className="container">
       {
         listItems
       }
-    </ul>
+      </div>
   );
 };
 export default List;

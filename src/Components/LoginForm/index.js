@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {Redirect} from 'react-router-dom';
+import { Form,Input,Button, Icon } from 'antd';
 import axios from 'axios';
 import Header from '../Header';
 
@@ -7,8 +8,8 @@ class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: 'test',
-      password: 'test',
+      username: '',
+      password: '',
       errorMessage: '',
       toDashboard:false
     }
@@ -46,19 +47,21 @@ class LoginForm extends Component {
           <Redirect to="/dashboard" />
       }
         <Header title="Login" />
-        <form>
-          <label>Username</label>
-          <input value={username} name="username" onChange={this.handleChange} />
-          <br />
-          <label>Password</label>
-          <input value={password} name="password" type="password" onChange={this.handleChange} />
-          <br />
-          <button onClick={this.handleSubmit}>Submit</button>
+        <Form style={{textAlign:'center'}}>
+         <Form.Item>
+            <Input style={{ width: 400}} prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" value={username} name="username" onChange={this.handleChange}/>
+        </Form.Item>
+        <Form.Item>
+            <Input style={{ width: 400 }} prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" value={password} name="password" onChange={this.handleChange} />
+        </Form.Item> 
+        <Form.Item>
+        <Button type="primary" onClick={this.handleSubmit}>Submit</Button>
+        </Form.Item>
           {errorMessage}
-        </form>
+        </Form>
       </Fragment>
     )
   }
 }
-
-export default LoginForm;
+const WrappedLoginForm = Form.create({ name: 'normal_login' })(LoginForm);
+export default WrappedLoginForm;

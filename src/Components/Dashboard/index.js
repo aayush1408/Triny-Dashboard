@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import {Button} from 'antd'; 
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 // Components
 import List from '../List';
-import Header from '../Header';
 
 // Handle axios configurations
 axios.defaults.withCredentials = true;
@@ -47,8 +47,10 @@ class Dashboard extends Component {
     const { parameters } = this.state;
     return (
       <div>
-        <Header title="Dashboard" />
-        <button onClick={this.logout}><Link to="/login">Logout</Link></button>
+        <div style={{display:'flex',justifyContent:'space-between'}}>
+        <h1 style={{marginLeft:'30px'}}>Dasboard</h1>
+        <Button type="primary" style={{marginRight:'30px'}}onClick={this.logout}><Link to="/login">Logout</Link></Button>
+        </div>
         <List parameters={parameters} />
       </div>
     );

@@ -1,8 +1,8 @@
 import React from 'react';
-
-export default function ({ title }) {
+import './index.css';
+export default function ({title,...rest}) {
   return (
-    <header>
+    <header {...rest} className="header">
       <h1>{title}</h1>
     </header>
   )

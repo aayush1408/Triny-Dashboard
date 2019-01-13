@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
-
+import {Icon} from 'antd';
 // Components
 import RegisterForm from './Components/RegisterForm';
 import Dashboard from './Components/Dashboard';
@@ -45,20 +45,19 @@ class App extends Component {
     const {isAuthenticated,username} = this.state
     return (
       <div className="App">
-      <header>
-        <h1>Triny.io</h1>
-        {
-          isAuthenticated && <h3>User: {username}</h3>  
-        }
-      </header>
         <BrowserRouter>
           <div>
-            <Link to='/register'>Register</Link>
-            <Link to='/login'>Login </Link>
-            {/* //Handle the Dashboard link on the logged in status */}
+          <header style={{display:'flex',justifyContent:'space-around'}}>
+            <h1>Triny.io</h1>
+            <Link to='/register' style={{ textDecoration: 'none' }}><h1>Register</h1></Link>
+            <Link to='/login' style={{ textDecoration: 'none' }}><h1>Login</h1> </Link>
             {
-              isAuthenticated && <Link to='/dashboard'>Dashboard</Link>
+              isAuthenticated && <Link to='/dashboard' style={{ textDecoration: 'none' }} ><h1>Dashboard</h1></Link>
             }
+            {
+              isAuthenticated && <h1><Icon type="user" /> {username}</h1>  
+            }
+          </header>
             <Switch>
               <Route path="/register" component={RegisterForm} />
               <Route path="/login" 
