@@ -17,6 +17,7 @@ class RegisterForm extends Component {
       [e.target.name]: e.target.value
     });
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:5000/user/register', this.state).then(() => {

@@ -18,6 +18,8 @@ class LoginForm extends Component {
       [e.target.name]: e.target.value
     });
   }
+
+  // Login user user data
   handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:5000/login', this.state).then((res) => {
@@ -34,6 +36,7 @@ class LoginForm extends Component {
       console.log(err);
     })
   }
+
   render() {
     const { username, password, errorMessage } = this.state;
     return (

@@ -15,24 +15,26 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      user: '',
+      username: '',
       isAuthenticated:false
     }
   }
 
+  // Fetch the current logged in user
   componentDidMount() {
     axios.get('http://localhost:5000/user/current-user', { withCredentials: true }).then(({ data }) => {
       if (data.data) {
-        this.setState({ user: data.data.username,isAuthenticated:true });
+        this.setState({ username: data.data.username,isAuthenticated:true });
       }
       else {
-        this.setState({ user: '' })
+        this.setState({ username: '' })
       }
     }).catch(() => {
       console.log('Error occured');
     });
   }
 
+  // Keeping track of the isAuthenticated status
   isAuthenticatedCallback = (data) =>{
     this.setState({
       isAuthenticated:data
@@ -45,27 +47,29 @@ class App extends Component {
       <header>
         <h1>Triny.io</h1>
         {
-          this.state.isAuthenticated && this.state.user
+          this.state.isAuthenticated && <h3>User: {this.state.user}</h3>  
         }
       </header>
         <BrowserRouter>
           <div>
             <Link to='/register'>Register</Link>
             <Link to='/login'>Login </Link>
+            {/* //Handle the Dashboard link on the logged in status */}
             {
               this.state.isAuthenticated && <Link to='/dashboard'>Dashboard</Link>
             }
             <Switch>
               <Route path="/register" component={RegisterForm} />
               <Route path="/login" 
-              render={(props) => 
-              <LoginForm {...props} 
-              isAuthed={this.isAuthenticatedCallback} />} 
+                  render={(props) => 
+                    <LoginForm {...props} 
+                    isAuthed={this.isAuthenticatedCallback} />} 
               />
               <ProtectedRoute path="/dashboard" 
-              component={Dashboard}
-              isAuthed={this.isAuthenticatedCallback} 
-              isAuthenticated={this.state.isAuthenticated} />
+                  component={Dashboard}
+                  isAuthed={this.isAuthenticatedCallback} 
+                  isAuthenticated={this.state.isAuthenticated} 
+              />
             </Switch>
           </div>
         </BrowserRouter>

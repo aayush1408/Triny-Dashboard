@@ -6,15 +6,19 @@ import axios from 'axios';
 import List from '../List';
 import Header from '../Header';
 
+// Handle axios configurations
 axios.defaults.withCredentials = true;
 
 class Dashboard extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       parameters: [],
     }
   }
+
+  // Get the dashboard details
   componentDidMount() {
     axios({
       method: 'GET',
@@ -31,6 +35,7 @@ class Dashboard extends Component {
     });
   }
 
+  // Logout the user on the click
   logout = (e) => {
     e.preventDefault();
     axios.get(`http://localhost:5000/logout`).then((res) => {
