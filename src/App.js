@@ -42,12 +42,13 @@ class App extends Component {
   }
 
   render() {
+    const {isAuthenticated,username} = this.state
     return (
       <div className="App">
       <header>
         <h1>Triny.io</h1>
         {
-          this.state.isAuthenticated && <h3>User: {this.state.user}</h3>  
+          isAuthenticated && <h3>User: {username}</h3>  
         }
       </header>
         <BrowserRouter>
@@ -56,7 +57,7 @@ class App extends Component {
             <Link to='/login'>Login </Link>
             {/* //Handle the Dashboard link on the logged in status */}
             {
-              this.state.isAuthenticated && <Link to='/dashboard'>Dashboard</Link>
+              isAuthenticated && <Link to='/dashboard'>Dashboard</Link>
             }
             <Switch>
               <Route path="/register" component={RegisterForm} />
@@ -68,7 +69,7 @@ class App extends Component {
               <ProtectedRoute path="/dashboard" 
                   component={Dashboard}
                   isAuthed={this.isAuthenticatedCallback} 
-                  isAuthenticated={this.state.isAuthenticated} 
+                  isAuthenticated={isAuthenticated} 
               />
             </Switch>
           </div>

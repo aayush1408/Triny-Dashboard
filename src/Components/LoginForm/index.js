@@ -38,11 +38,11 @@ class LoginForm extends Component {
   }
 
   render() {
-    const { username, password, errorMessage } = this.state;
+    const { username, password, errorMessage,toDashboard } = this.state;
     return (
       <Fragment>
       {
-        this.state.toDashboard &&
+          toDashboard &&
           <Redirect to="/dashboard" />
       }
         <Header title="Login" />

@@ -9,9 +9,11 @@ class RegisterForm extends Component {
       fullname: '',
       username: '',
       password: '',
-      email: ''
+      email: '',
+      errorMessage:''
     }
   }
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
@@ -20,8 +22,15 @@ class RegisterForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/user/register', this.state).then(() => {
-      console.log('Saved');
+    axios.post('http://localhost:5000/user/register', this.state).then((res) => {
+      if(res.data.dataSaved){
+        this.props.history.push('/login')
+      }
+      else{
+        this.setState({
+          errorMessage:res.data.message
+        })
+      }
     }).catch((err) => {
       console.log(err);
     })
@@ -45,6 +54,7 @@ class RegisterForm extends Component {
           <input value={email} name="email" onChange={this.handleChange} />
           <br />
           <button onClick={this.handleSubmit}>Submit</button>
+          {this.state.errorMessage}
         </form>
       </Fragment>
     )
