@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 import Header from '../Header';
 
@@ -7,7 +8,9 @@ class LoginForm extends Component {
     super(props);
     this.state = {
       username: 'test',
-      password: 'test'
+      password: 'test',
+      errorMessage: '',
+      toDashboard:false
     }
   }
   handleChange = (e) => {
@@ -18,15 +21,27 @@ class LoginForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:5000/login', this.state).then((res) => {
-      console.log(res);
+      if (res.data.message === 'User authenticated') {
+        this.props.isAuthed(true);
+        this.setState({
+          toDashboard:true
+        })
+      }
+      else {
+        this.setState({ errorMessage: res.data.message })
+      }
     }).catch((err) => {
       console.log(err);
     })
   }
   render() {
-    const { username, password } = this.state;
+    const { username, password, errorMessage } = this.state;
     return (
       <Fragment>
+      {
+        this.state.toDashboard &&
+          <Redirect to="/dashboard" />
+      }
         <Header title="Login" />
         <form>
           <label>Username</label>
@@ -36,6 +51,7 @@ class LoginForm extends Component {
           <input value={password} name="password" type="password" onChange={this.handleChange} />
           <br />
           <button onClick={this.handleSubmit}>Submit</button>
+          {errorMessage}
         </form>
       </Fragment>
     )

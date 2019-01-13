@@ -9,8 +9,8 @@ import Header from '../Header';
 axios.defaults.withCredentials = true;
 
 class Dashboard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       parameters: [],
     }
@@ -34,7 +34,7 @@ class Dashboard extends Component {
   logout = (e) => {
     e.preventDefault();
     axios.get(`http://localhost:5000/logout`).then((res) => {
-      console.log(res);
+      this.props.isAuthed(false);
     })
   };
 
