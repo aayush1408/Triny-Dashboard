@@ -49,13 +49,13 @@ class App extends Component {
           <div>
           <header style={{display:'flex',justifyContent:'space-around'}}>
             <h1>Triny.io</h1>
-            <Link to='/register' style={{ textDecoration: 'none' }}><h1>Register</h1></Link>
-            <Link to='/login' style={{ textDecoration: 'none' }}><h1>Login</h1> </Link>
+            <Link to='/register' style={{ textDecoration: 'none' }}><h2>Register</h2></Link>
+            <Link to='/login' style={{ textDecoration: 'none' }}><h2>Login</h2> </Link>
             {
-              isAuthenticated && <Link to='/dashboard' style={{ textDecoration: 'none' }} ><h1>Dashboard</h1></Link>
+              isAuthenticated && <Link to='/dashboard' style={{ textDecoration: 'none' }} ><h2>Dashboard</h2></Link>
             }
             {
-              isAuthenticated && <h1><Icon type="user" /> {username}</h1>  
+              isAuthenticated && <h2><Icon type="user" style={{ color: 'rgba(0,0,0,1)' }} /> {username}</h2>  
             }
           </header>
             <Switch>
