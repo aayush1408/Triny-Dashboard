@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import {  HashRouter, Route, Switch, Link } from 'react-router-dom';
 import axios from 'axios';
-import {Icon} from 'antd';
+import {Icon,Menu} from 'antd';
 // Components
 import RegisterForm from './Components/RegisterForm';
 import Dashboard from './Components/Dashboard';
@@ -19,7 +19,6 @@ class App extends Component {
       isAuthenticated:false
     }
   }
-
   // Fetch the current logged in user
   componentDidMount() {
     axios.get('https://webhooks12.herokuapp.com/user/current-user', { withCredentials: true }).then(({ data }) => {
@@ -35,9 +34,10 @@ class App extends Component {
   }
 
   // Keeping track of the isAuthenticated status
-  isAuthenticatedCallback = (data) =>{
+  isAuthenticatedCallback = (isLogged,data='') =>{
     this.setState({
-      isAuthenticated:data
+      isAuthenticated:isLogged,
+      username:data
     })
   }
 
@@ -45,19 +45,25 @@ class App extends Component {
     const {isAuthenticated,username} = this.state
     return (
       <div className="App">
-        <BrowserRouter>
+        <HashRouter>
           <div>
-          <header style={{display:'flex',justifyContent:'space-around'}}>
-            <h1>Triny.io</h1>
-            <Link to='/register' style={{ textDecoration: 'none' }}><h2>Register</h2></Link>
-            <Link to='/login' style={{ textDecoration: 'none' }}><h2>Login</h2> </Link>
+          <Menu mode="horizontal">
+            <Menu.Item disabled={true}>
+              <h1>Triny.io</h1>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to='/register' style={{ textDecoration: 'none' }}><h2>Register</h2></Link>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to='/login' style={{ textDecoration: 'none' }}><h2>Login</h2> </Link>
+            </Menu.Item>
             {
-              isAuthenticated && <Link to='/dashboard' style={{ textDecoration: 'none' }} ><h2>Dashboard</h2></Link>
+              isAuthenticated && <Menu.Item disabled={true} style={{float: 'right'}}><h2><Icon type="user" style={{ color: 'rgba(0,0,0,1)' }} /> {username}</h2>  </Menu.Item>
             }
             {
-              isAuthenticated && <h2><Icon type="user" style={{ color: 'rgba(0,0,0,1)' }} /> {username}</h2>  
+              isAuthenticated && <Menu.Item style={{float: 'right'}}><Link to='/dashboard' style={{ textDecoration: 'none' }} ><h2>Dashboard</h2></Link></Menu.Item>
             }
-          </header>
+          </Menu>
             <Switch>
               <Route path="/register" component={RegisterForm} />
               <Route path="/login" 
@@ -72,7 +78,7 @@ class App extends Component {
               />
             </Switch>
           </div>
-        </BrowserRouter>
+        </HashRouter>
       </div>
     );
   }

@@ -24,9 +24,9 @@ class RegisterForm extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:5000/user/register', this.state).then((res) => {
+    axios.post('https://webhooks12.herokuapp.com/user/register', this.state).then((res) => {
       if(res.data.dataSaved){
-        this.props.history.push('/login')
+        this.props.history.push('/login');
       }
       else{
         this.setState({
@@ -34,9 +34,12 @@ class RegisterForm extends Component {
         })
       }
     }).catch((err) => {
-      console.log(err);
-    })
+      this.setState({
+          errorMessage:'Something went wrong'
+        })
+    });
   }
+
   render() {
     const { fullname, email, username, password } = this.state;
     return (
@@ -56,7 +59,7 @@ class RegisterForm extends Component {
             <Input style={{ width: 400}}  placeholder="Email" prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} value={email} name="email" onChange={this.handleChange} />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" onClick={this.handleSubmit}>Submit</Button>
+            <Button type="primary" style={{textAlign:'center'}} onClick={this.handleSubmit}>Submit</Button>
           </Form.Item>
           {this.state.errorMessage}
         </Form>

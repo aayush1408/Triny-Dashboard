@@ -25,7 +25,7 @@ class LoginForm extends Component {
     e.preventDefault();
     axios.post('https://webhooks12.herokuapp.com/login', this.state).then((res) => {
       if (res.data.message === 'User authenticated') {
-        this.props.isAuthed(true);
+        this.props.isAuthed(true,res.data.data.username);
         this.setState({
           toDashboard:true
         })
@@ -35,17 +35,17 @@ class LoginForm extends Component {
       }
     }).catch((err) => {
       console.log(err);
-    })
+    });
   }
 
   render() {
     const { username, password, errorMessage,toDashboard } = this.state;
     return (
       <Fragment>
-      {
-          toDashboard &&
-          <Redirect to="/dashboard" />
-      }
+        {
+            toDashboard &&
+            <Redirect to="/dashboard" />
+        }
         <Header title="Login" />
         <Form style={{textAlign:'center'}}>
          <Form.Item>
@@ -55,7 +55,7 @@ class LoginForm extends Component {
             <Input style={{ width: 400 }} prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" value={password} name="password" onChange={this.handleChange} />
         </Form.Item> 
         <Form.Item>
-        <Button type="primary" onClick={this.handleSubmit}>Submit</Button>
+          <Button type="primary" style={{textAlign:'center'}} onClick={this.handleSubmit}>Submit</Button>
         </Form.Item>
           {errorMessage}
         </Form>
