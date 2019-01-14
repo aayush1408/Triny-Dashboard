@@ -22,7 +22,7 @@ class App extends Component {
 
   // Fetch the current logged in user
   componentDidMount() {
-    axios.get('http://localhost:5000/user/current-user', { withCredentials: true }).then(({ data }) => {
+    axios.get('https://webhooks12.herokuapp.com/user/current-user', { withCredentials: true }).then(({ data }) => {
       if (data.data) {
         this.setState({ username: data.data.username,isAuthenticated:true });
       }
